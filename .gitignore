@@ -1,0 +1,5 @@
+/.idea/
+/DB/
+/NginxProxy/conf.d/*
+/Website/htdocs/vendor/
+/Website/htdocs/logs/*

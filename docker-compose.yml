@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  'slim':
+    container_name: airtel
+    build:
+      context: Docker/
+    image: slim/php:72
+
+    environment:
+      VIRTUAL_HOST: airtel.local
+
+    volumes:
+      - ./Website/config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./Website/htdocs:/var/www/html
+
+
+
+
+  nginxproxy:
+    image: jwilder/nginx-proxy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+      - "6379:6379"
+    environment:
+      VIRTUAL_PROTO: https
+    volumes:
+      - ./NginxProxy/proxy.conf:/etc/nginx/proxy.conf
+      - ./NginxProxy/conf.d:/etc/nginx/conf.d
+      - ./NginxProxy/certs:/etc/nginx/certs
+      - ./NginxProxy/vhost.d:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
